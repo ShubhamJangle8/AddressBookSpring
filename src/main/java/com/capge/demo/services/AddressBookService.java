@@ -24,8 +24,7 @@ public class AddressBookService implements IPersonService {
 
 	@Override
 	public List<PersonData> addContact(PersonDTO personDTO) {
-		PersonData personData = null;
-		personData = new PersonData(personList.size()+1, personDTO);
+		PersonData personData = new PersonData(personList.size()+1, personDTO);
 		personList.add(personData);
 		return personList;
 	}

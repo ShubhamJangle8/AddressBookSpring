@@ -1,6 +1,6 @@
 package com.capge.demo.controller;
 
-import java.util.List;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,30 +27,24 @@ public class AddressBookController {
 	
 	@GetMapping(value= {"/","","/home"})
 	public ResponseEntity<ResponseDTO> getContactData() {
-		List<PersonData> personList = null;
-		personList = service.getContactData();
-		ResponseDTO responseDTO = new ResponseDTO("Get call successful", personList);
+		ResponseDTO responseDTO = new ResponseDTO("Get call successful", service.getContactData());
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{contactId}")
 	public ResponseEntity<ResponseDTO> getContactById(@PathVariable("contactId") Integer contactId){
-		PersonData personData = null;
-		personData = service.getContactById(contactId);
-		ResponseDTO responseDTO = new ResponseDTO("Get call successful", personData);
+		ResponseDTO responseDTO = new ResponseDTO("Get call successful", service.getContactById(contactId));
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 		
 	@PostMapping("/create")
-	public ResponseEntity<ResponseDTO> addContact(@RequestBody PersonDTO personDTO) {
-		List<PersonData> personList = null;
-		personList = service.addContact(personDTO);
-		ResponseDTO responseDTO = new ResponseDTO("Contact creation successfull", personList);
+	public ResponseEntity<ResponseDTO> addContact(@Valid @RequestBody PersonDTO personDTO) {
+		ResponseDTO responseDTO = new ResponseDTO("Contact creation successfull", service.addContact(personDTO));
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{contactId}")
-	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") Integer contactId, @RequestBody PersonDTO personDTO){
+	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") Integer contactId,@Valid @RequestBody PersonDTO personDTO){
 		PersonData personData = service.updateContact(contactId, personDTO);
 		ResponseDTO responseDTO = new ResponseDTO("Contact updation successfull", personData);
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
