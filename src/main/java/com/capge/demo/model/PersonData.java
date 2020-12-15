@@ -1,6 +1,7 @@
 package com.capge.demo.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.capge.demo.dto.PersonDTO;
@@ -10,6 +11,7 @@ import lombok.Data;
 @Entity
 @Table(name = "AddressBook")
 public @Data class PersonData {
+	@Id
 	private Long id;
 	private String firstName;
 	private String lastName;
