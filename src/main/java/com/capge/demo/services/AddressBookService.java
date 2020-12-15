@@ -1,36 +1,52 @@
 package com.capge.demo.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.capge.demo.dto.PersonDTO;
+import com.capge.demo.model.PersonData;
 
 @Service
-public class AddressBookService implements IPersonService{
+public class AddressBookService implements IPersonService {
+	List<PersonData> personList = new ArrayList<>();
 
 	@Override
-	public String getContactData() {
-		return "Got the Contact";
+	public List<PersonData> getContactData() {
+		return personList;
 	}
 
 	@Override
-	public String getContactById(Long id) {
-		return "Contact for id " + id + " = Shubham";
+	public PersonData getContactById(Integer id) {
+		return personList.get(id-1);
 	}
 
 	@Override
-	public String addContact(Long contactId, PersonDTO personDTO) {
-		return "Contact created for Id " + contactId;
+	public List<PersonData> addContact(PersonDTO personDTO) {
+		PersonData personData = null;
+		personData = new PersonData(personList.size()+1, personDTO);
+		personList.add(personData);
+		return personList;
 	}
 
 	@Override
-	public String updateContact(Long contactId) {
-		return "Contact updated for Id " + contactId;
+	public PersonData updateContact(Integer contactId, PersonDTO personDTO) {
+		PersonData personData = this.getContactById(contactId);
+		personData.setFirstName(personDTO.getFirstName());
+		personData.setLastName(personDTO.getLastName());
+		personData.setAddress(personDTO.getAddress());
+		personData.setCity(personData.getCity());
+		personData.setState(personDTO.getState());
+		personData.setZipCode(personDTO.getZipCode());
+		personData.setPhoneNumber(personDTO.getPhoneNumber());
+		personList.set(contactId-1, personData);
+		return personData;
 	}
 
 	@Override
-	public String deleteContact(Long contactId) {
-		return "Contact deleted for Id " + contactId;
+	public void deleteContact(Integer contactId) {
+		personList.remove(contactId-1);
 	}
-	
 
 }

@@ -1,18 +1,10 @@
 package com.capge.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import com.capge.demo.dto.PersonDTO;
 
-import lombok.Data;
-
-@Entity
-@Table(name = "AddressBook")
-public @Data class PersonData {
-	@Id
-	private Long id;
+public class PersonData {
+	
+	private Integer id;
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -21,7 +13,7 @@ public @Data class PersonData {
 	private String zipCode;
 	private String phoneNumber;
 	
-	public PersonData(Long id, PersonDTO personDTO){
+	public PersonData(Integer id, PersonDTO personDTO){
 		this.id = id;
 		this.firstName = personDTO.getFirstName();
 		this.lastName = personDTO.getLastName();
@@ -30,5 +22,69 @@ public @Data class PersonData {
 		this.state = personDTO.getState();
 		this.zipCode = personDTO.getZipCode();
 		this.phoneNumber = personDTO.getPhoneNumber();
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 }
