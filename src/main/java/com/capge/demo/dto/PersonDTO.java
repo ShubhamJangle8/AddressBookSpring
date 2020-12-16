@@ -4,7 +4,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
+@NoArgsConstructor
 public @Data class PersonDTO {
 	@NotEmpty
 	@Pattern(regexp = "^[A-Z]{1}[A-Za-z\\s]{2,}$", message = "Put an Employee valid name")

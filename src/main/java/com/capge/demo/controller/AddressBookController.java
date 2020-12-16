@@ -1,5 +1,7 @@
 package com.capge.demo.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,15 @@ public class AddressBookController {
 	}
 
 	@GetMapping("/get/{contactId}")
-	public ResponseEntity<ResponseDTO> getContactById(@PathVariable("contactId") Integer contactId) throws AddressBookException{
+	public ResponseEntity<ResponseDTO> getContactById(@PathVariable("contactId") Long contactId) throws AddressBookException{
 		ResponseDTO responseDTO = new ResponseDTO("Get call successful", service.getContactById(contactId));
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getall")
+	public ResponseEntity<ResponseDTO> getAllContacts(){
+		List<PersonData> personList = service.getAllContacts();
+		ResponseDTO responseDTO = new ResponseDTO("Get call successful", service.getAllContacts());
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 		
@@ -45,14 +54,14 @@ public class AddressBookController {
 	}
 
 	@PutMapping("/update/{contactId}")
-	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") Integer contactId,@Valid @RequestBody PersonDTO personDTO) throws AddressBookException{
-		PersonData personData = service.updateContact(contactId, personDTO);
+	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") Long contactId,@Valid @RequestBody PersonDTO personDTO) throws AddressBookException{
+		PersonData personData = service.updateContactById(contactId, personDTO);
 		ResponseDTO responseDTO = new ResponseDTO("Contact updation successfull", personData);
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{empId}")
-	public ResponseEntity<ResponseDTO> deleteContactById(@PathVariable("empId") Integer contactId) throws AddressBookException {
+	public ResponseEntity<ResponseDTO> deleteContactById(@PathVariable("empId") Long contactId) throws AddressBookException {
 		service.deleteContact(contactId);
 		String message = "Contact deleted for id = " + contactId;
 		ResponseDTO responseDTO = new ResponseDTO("Contact deletion successfull", message);

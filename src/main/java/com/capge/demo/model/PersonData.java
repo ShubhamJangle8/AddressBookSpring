@@ -1,12 +1,20 @@
 package com.capge.demo.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.capge.demo.dto.PersonDTO;
 
 import lombok.Data;
-
+@Entity
+@Table(name = "person")
 public @Data class PersonData {
-	
-	private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private String name;
 	private String address;
 	private String city;
@@ -14,8 +22,15 @@ public @Data class PersonData {
 	private String zipCode;
 	private String phoneNumber;
 	
-	public PersonData(Integer id, PersonDTO personDTO){
-		this.id = id;
+	public PersonData() {
+		
+	}
+	
+	public PersonData(PersonDTO personDTO) {
+		this.updateEmployeePayrollData(personDTO);
+	}
+
+	public void updateEmployeePayrollData(PersonDTO personDTO) {
 		this.name = personDTO.getName();
 		this.address = personDTO.getAddress();
 		this.city = personDTO.getCity();
