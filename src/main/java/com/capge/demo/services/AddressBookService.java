@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.capge.demo.dto.PersonDTO;
+import com.capge.demo.exceptions.AddressBookException;
 import com.capge.demo.model.PersonData;
 
 @Service
@@ -18,7 +19,8 @@ public class AddressBookService implements IPersonService {
 	}
 
 	@Override
-	public PersonData getContactById(Integer id) {
+	public PersonData getContactById(Integer id) throws AddressBookException {
+		personList.stream().filter(personData -> personData.getId() == id).findFirst().orElseThrow(() -> new AddressBookException("Contact not found for this id"));
 		return personList.get(id-1);
 	}
 
@@ -30,7 +32,8 @@ public class AddressBookService implements IPersonService {
 	}
 
 	@Override
-	public PersonData updateContact(Integer contactId, PersonDTO personDTO) {
+	public PersonData updateContact(Integer contactId, PersonDTO personDTO) throws AddressBookException {
+		personList.stream().filter(personData -> personData.getId() == contactId).findFirst().orElseThrow(() -> new AddressBookException("Contact not found for this id"));
 		PersonData personData = this.getContactById(contactId);
 		personData.setFirstName(personDTO.getFirstName());
 		personData.setLastName(personDTO.getLastName());
@@ -44,7 +47,8 @@ public class AddressBookService implements IPersonService {
 	}
 
 	@Override
-	public void deleteContact(Integer contactId) {
+	public void deleteContact(Integer contactId) throws AddressBookException {
+		personList.stream().filter(personData -> personData.getId() == contactId).findFirst().orElseThrow(() -> new AddressBookException("Contact not found for this id"));
 		personList.remove(contactId-1);
 	}
 

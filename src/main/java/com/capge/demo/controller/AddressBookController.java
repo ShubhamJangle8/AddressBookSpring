@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capge.demo.dto.PersonDTO;
 import com.capge.demo.dto.ResponseDTO;
+import com.capge.demo.exceptions.AddressBookException;
 import com.capge.demo.model.PersonData;
 import com.capge.demo.services.IPersonService;
 
@@ -32,7 +33,7 @@ public class AddressBookController {
 	}
 
 	@GetMapping("/get/{contactId}")
-	public ResponseEntity<ResponseDTO> getContactById(@PathVariable("contactId") Integer contactId){
+	public ResponseEntity<ResponseDTO> getContactById(@PathVariable("contactId") Integer contactId) throws AddressBookException{
 		ResponseDTO responseDTO = new ResponseDTO("Get call successful", service.getContactById(contactId));
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
@@ -44,14 +45,14 @@ public class AddressBookController {
 	}
 
 	@PutMapping("/update/{contactId}")
-	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") Integer contactId,@Valid @RequestBody PersonDTO personDTO){
+	public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") Integer contactId,@Valid @RequestBody PersonDTO personDTO) throws AddressBookException{
 		PersonData personData = service.updateContact(contactId, personDTO);
 		ResponseDTO responseDTO = new ResponseDTO("Contact updation successfull", personData);
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{empId}")
-	public ResponseEntity<ResponseDTO> deleteContactById(@PathVariable("empId") Integer contactId) {
+	public ResponseEntity<ResponseDTO> deleteContactById(@PathVariable("empId") Integer contactId) throws AddressBookException {
 		service.deleteContact(contactId);
 		String message = "Contact deleted for id = " + contactId;
 		ResponseDTO responseDTO = new ResponseDTO("Contact deletion successfull", message);
