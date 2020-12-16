@@ -7,8 +7,7 @@ import lombok.Data;
 public @Data class PersonData {
 	
 	private Integer id;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String address;
 	private String city;
 	private String state;
@@ -17,8 +16,7 @@ public @Data class PersonData {
 	
 	public PersonData(Integer id, PersonDTO personDTO){
 		this.id = id;
-		this.firstName = personDTO.getFirstName();
-		this.lastName = personDTO.getLastName();
+		this.name = personDTO.getName();
 		this.address = personDTO.getAddress();
 		this.city = personDTO.getCity();
 		this.state = personDTO.getState();

@@ -35,8 +35,7 @@ public class AddressBookService implements IPersonService {
 	public PersonData updateContact(Integer contactId, PersonDTO personDTO) throws AddressBookException {
 		personList.stream().filter(personData -> personData.getId() == contactId).findFirst().orElseThrow(() -> new AddressBookException("Contact not found for this id"));
 		PersonData personData = this.getContactById(contactId);
-		personData.setFirstName(personDTO.getFirstName());
-		personData.setLastName(personDTO.getLastName());
+		personData.setName(personDTO.getName());
 		personData.setAddress(personDTO.getAddress());
 		personData.setCity(personData.getCity());
 		personData.setState(personDTO.getState());
